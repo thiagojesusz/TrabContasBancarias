@@ -8,6 +8,7 @@ namespace ContasBancarias
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("RONALDO");
+            Console.WriteLine("Teste Eduardo");
         }
     }
 }
