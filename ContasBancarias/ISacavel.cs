@@ -6,5 +6,10 @@ namespace ContasBancarias
 {
     interface ISacavel
     {
+        bool sacar(double valor);
+        bool depositar(double valor);
+        double rendimento();
+        double cobrarTarifa();
+        double saldoAtual();
     }
 }

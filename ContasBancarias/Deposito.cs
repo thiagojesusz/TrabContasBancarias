@@ -4,7 +4,11 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Deposito
+    class Deposito: Operação
     {
+        public override bool atualizar(Conta conta)
+        {
+
+        }
     }
 }

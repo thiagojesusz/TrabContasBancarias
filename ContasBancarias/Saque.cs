@@ -4,7 +4,11 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Saque
+    class Saque: Operação
     {
+        public override bool atualizar(Conta conta)
+        {
+
+        }
     }
 }

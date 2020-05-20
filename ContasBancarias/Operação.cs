@@ -4,7 +4,14 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Operação
+    abstract class Operação
     {
+        private double valor;
+        private DateTime Data;
+
+        public virtual bool atualizar(Conta conta)
+        {
+            return true;
+        }
     }
 }

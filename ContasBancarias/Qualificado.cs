@@ -4,7 +4,11 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Qualificado
+    class Qualificado: Cliente
     {
+        public override double cobrarTaxa()
+        {
+
+        }
     }
 }
