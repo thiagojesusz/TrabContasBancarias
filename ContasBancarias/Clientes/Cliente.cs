@@ -16,6 +16,12 @@ namespace ContasBancarias
             this.nome = nome;
          
         }
+        public string getNome() { return nome; }
+        public string getCPF() { return CPF; }
+
+        public abstract string extrato(int numconta);
+        public abstract double totalTaxas();
+        public abstract double totalrendimentos();
         public abstract double cobrarTaxa(double valorOriginal);
     }
 }
