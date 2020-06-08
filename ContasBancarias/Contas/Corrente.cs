@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Corrente
+    class Corrente : ISacavel
     {
         private double saldo;
         private double limite;
