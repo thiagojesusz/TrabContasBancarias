@@ -15,6 +15,12 @@ namespace ContasBancarias
         private DateTime dataAbertura;
         private int tipo;
         private List<string> listaExtrato = new List<string>();
+        private Operacao saq;
+        private Operacao depos;
+        private double saldoInicial;
+
+        private double totalRendimentos;
+        private double totalTaxas;
 
         public Conta(int numConta, int tipo, string CPF, double saldo)
         {
@@ -22,6 +28,7 @@ namespace ContasBancarias
             this.dataAbertura = DateTime.Now;
             this.CPFTitular = CPF;
             this.tipo = tipo;
+            this.saldoInicial = saldo;
             this.contInvestimento = new Investimento();
             this.contCorrente = new Corrente();
             if (tipo == 0)
@@ -40,40 +47,73 @@ namespace ContasBancarias
 
         public string extrato()
         {
-            StringBuilder aux = new StringBuilder();
-            if(tipo ==0)
-            aux.AppendLine("Titular: "+CPFTitular+" Conta: "+numConta.ToString("D4")+" Tipo de Conta: Conta Corrente");
-            else if(tipo ==1)
-            aux.AppendLine("Titular: " + CPFTitular + " Conta: " + numConta.ToString("D4") + " Tipo de Conta: Conta Investimento");
+            StringBuilder aux = new StringBuilder("-------------- EXTRATO --------------\n");
+            if (tipo == 0)
+                aux.AppendLine("\nTitular: " + CPFTitular + " Conta: " + numConta.ToString("D4") + " Tipo de Conta: Conta Corrente");
+
+            else if (tipo == 1)
+                aux.AppendLine("\nTitular: " + CPFTitular + " Conta: " + numConta.ToString("D4") + " Tipo de Conta: Conta Investimento");
+
+            aux.AppendLine("\nSaldo Anterior: R$" +saldoInicial.ToString("F2"));
             foreach (string ext in listaExtrato)
             {
                 aux.AppendLine(ext);
             }
             if (tipo == 0)
-            aux.AppendLine("Saldo atual: R$ " + contCorrente.saldoAtual().ToString("F2"));
+            aux.AppendLine("Saldo atual: R$" + contCorrente.saldoAtual().ToString("F2"));
              if (tipo ==1)
-            aux.AppendLine("Saldo atual: R$ " + contInvestimento.saldoAtual().ToString("F2"));
+            aux.AppendLine("Saldo atual: R$" + contInvestimento.saldoAtual().ToString("F2"));
 
             return aux.ToString();
         }
 
-        // public abstract double rendimento();
-
-       // public abstract double tarifa();
-
         public bool saque(double valor)
         {
+            bool verificar=true;
+            saq = new Saque();
+            if (tipo == 0)
+            verificar = contCorrente.sacar(valor);
+            else if (tipo == 1)
+            verificar = contInvestimento.sacar(valor);
 
-            DateTime hoje = DateTime.Now;
-            listaExtrato.Add("Saque de " + valor.ToString("F2") + " Data: " + hoje.ToString());
-            return true;
+            if (verificar == true)
+                listaExtrato.Add(saq.atualizar(valor));
+
+            return verificar;
+
         }
 
         public bool deposito(double valor)
         {
-            DateTime hoje = DateTime.Now;
-            listaExtrato.Add("Deposito de " + valor.ToString("F2") + " Data: " + hoje.ToString());
-            return true;
+            bool verificar = true;
+            depos = new Deposito();
+            if (tipo == 0)
+                verificar = contCorrente.depositar(valor);
+            else if (tipo == 1)
+                verificar = contInvestimento.depositar(valor);
+
+            if (verificar == true)
+                listaExtrato.Add(depos.atualizar(valor));
+
+            return verificar;
+        }
+        public double rendimento()
+        {
+            if (tipo == 0)
+                totalRendimentos += contCorrente.rendimento();
+            else if (tipo == 1)
+                totalRendimentos += contInvestimento.rendimento();
+
+            return totalRendimentos;
+        }
+
+        public double tarifa()
+        {
+            if (tipo == 0)
+               totalTaxas += contCorrente.cobrarTarifa();
+            else if (tipo == 1)
+                totalTaxas += contInvestimento.cobrarTarifa();
+            return totalRendimentos;
         }
     }
 }

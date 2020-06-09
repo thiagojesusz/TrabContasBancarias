@@ -4,16 +4,17 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Investimento: ISacavel
+    class Investimento : ISacavel
     {
-        private static double aliquota = 1;
-        private static double tarifa = 3;
+        private static double aliquota = 10;
+        private static double tarifa = 4;
         private double saldo;
-        private static double limite = 100;
-
+        // ps: mudar método rendimento.
         public double cobrarTarifa()
         {
-            return saldo -= tarifa;
+            saldo -= tarifa;
+
+            return tarifa;
         }
 
         public bool depositar(double valor)
@@ -21,24 +22,30 @@ namespace ContasBancarias
             if (valor > 0)
             {
                 saldo += valor;
+                return true;
             }
-            return true;
+            else
+                return false;
         }
 
         public double rendimento()
         {
-            return saldo += aliquota;
+            double rendim = aliquota - tarifa;
+            saldo += aliquota;
+
+            return rendim;
         }
 
         public bool sacar(double valor)
         {
-            if (saldo + limite >= valor)
+            if ((valor > 0) && ((saldo - valor) >= 0))
             {
-                saldo -= valor;
+                this.saldo -= valor;
+                return true;
             }
-            return true;
+            else
+                return false;
         }
-
         public double saldoAtual()
         {
             return saldo;

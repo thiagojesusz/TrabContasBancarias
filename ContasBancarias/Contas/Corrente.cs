@@ -6,14 +6,16 @@ namespace ContasBancarias
 {
     class Corrente :ISacavel
     {
-        private static double aliquota=1;
+        private static double aliquota=2;
         private static double tarifa = 3;
         private double saldo;
         private static double limite = 100;
-
+        // ps: mudar método rendimento.
         public double cobrarTarifa()
         {
-            return saldo -= tarifa;
+            saldo -= tarifa;
+
+            return tarifa;
         }
 
         public bool depositar(double valor)
@@ -21,22 +23,30 @@ namespace ContasBancarias
             if (valor > 0)
             {
                 saldo += valor;
+                return true;
             }
-            return true;
+            else
+                return false;
         }
 
         public double rendimento()
         {
-            return saldo += aliquota;
+            saldo += aliquota;
+            return aliquota;
         }
 
         public bool sacar(double valor)
         {
-            if (saldo + limite >= valor)
+            if (saldo - valor < 0)
+                cobrarTarifa();
+            if ((saldo - valor) >= (limite * (-1)))
             {
-                saldo -= valor;
+                this.saldo -= valor;
+                return true;
             }
-            return true;
+            else
+                return false;
+
         }
 
         public double saldoAtual()

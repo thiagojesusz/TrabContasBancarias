@@ -4,11 +4,13 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Saque: Operação
+    class Saque: Operacao
     {
-       /* public override bool atualizar(Conta conta)
+        public override string atualizar(double valor)
         {
+             Data = DateTime.Now;
 
-        }*/
+            return (Data + " - Saque no valor de R$" + valor.ToString("F2")).ToString();
+        }
     }
 }

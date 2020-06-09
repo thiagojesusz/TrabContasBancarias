@@ -4,11 +4,13 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Deposito: Operação
+    class Deposito: Operacao
     {
-        public override bool atualizar(Conta conta)
+        public override string atualizar(double valor)
         {
-            return true;
+            Data = DateTime.Now;
+
+            return (Data + " - Depósito no valor de R$" + valor.ToString("F2")).ToString();
         }
     }
 }
