@@ -6,24 +6,15 @@ namespace ContasBancarias
 {
     class Regular: Cliente
     {
-        public override double cobrarTaxa()
+        public Regular(string CPF, string nome) : base(CPF, nome)
         {
+            this.CPF = CPF;
+            this.nome = nome;
 
         }
-
-        public override string extrato(int numConta)
+        public override double cobrarTaxa(double valorOriginal)
         {
-
-        }
-
-        public override double totalRendimento()
-        {
-
-        }
-
-        public override double totalTaxas()
-        {
-
+            return 2;
         }
     }
 }

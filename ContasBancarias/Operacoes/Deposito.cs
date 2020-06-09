@@ -8,7 +8,7 @@ namespace ContasBancarias
     {
         public override bool atualizar(Conta conta)
         {
-
+            return true;
         }
     }
 }

@@ -10,44 +10,48 @@ namespace ContasBancarias
     {
         private string nomeTitular;
         private ISacavel categoria;
+        public int tipo;
         private int numConta;
-        private double saldo = 0;
+        private double saldo;
         private DateTime dataAbertura;
         private List<string> listaExtrato = new List<string>();
 
-        public Conta(int numConta, string nome, double valor, ISacavel tipo)
+        public Conta(int numConta, string nome, double saldo, int tipo)
         {
             this.numConta = numConta;
-            this.saldo = valor;
-            this.categoria = tipo;
+            this.saldo = saldo;
+            this.tipo = tipo;
             this.dataAbertura = DateTime.Now;
             this.nomeTitular = nome;
         }
 
+        public string getNomeTituloar() { return nomeTitular; }
+        public int getNumConta() { return numConta; }
+        public double getSaldo() { return saldo; }
+        public DateTime getDataAbertura() { return dataAbertura; }
+
         public string extrato()
         {
-            foreach(string x in listaExtrato)
+            StringBuilder aux = new StringBuilder();
+
+            aux.AppendLine("Titular: "+nomeTitular+" Conta: "+numConta+" Categoria: "+tipo);
+            foreach (string ext in listaExtrato)
             {
-                return x;
+                aux.AppendLine(ext);
             }
-            return "";
+            aux.AppendLine("Saldo atual: R$ " + saldo.ToString("F2"));
+            return aux.ToString();
         }
 
-        public double rendimento()
-        {
-            return saldo * 0.01;
-        }
+        // public abstract double rendimento();
 
-        public double tarifa()
-        {
-            return 4.50;
-        }
+       // public abstract double tarifa();
 
         public bool saque(double valor)
         {
             saldo -= valor;
             DateTime hoje = DateTime.Now;
-            listaExtrato.Add("Saque de " + valor.ToString("F2") + " feito do dia " + hoje);
+            listaExtrato.Add("Saque de " + valor.ToString("F2") + " Data: " + hoje.ToString());
             return true;
         }
 
@@ -55,7 +59,7 @@ namespace ContasBancarias
         {
             saldo += valor;
             DateTime hoje = DateTime.Now;
-            listaExtrato.Add("Deposito de " + valor.ToString("F2") + " feito do dia " + hoje);
+            listaExtrato.Add("Deposito de " + valor.ToString("F2") + " Data: " + hoje.ToString());
             return true;
         }
     }

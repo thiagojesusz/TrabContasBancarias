@@ -4,14 +4,22 @@ using System.Text;
 
 namespace ContasBancarias
 {
-    class Corrente : ISacavel
+    class Corrente :ISacavel
     {
+        private static double aliquota=1;
+        private static double tarifa = 10.0;
         private double saldo;
         private double limite;
+        
+        public Corrente(double saldo, double limite)
+        {
+            this.saldo = saldo;
+            this.limite = limite;
+        }
 
         public double cobrarTarifa()
         {
-            return saldo -= 10.0;
+            return saldo -= tarifa;
         }
 
         public bool depositar(double valor)
@@ -25,7 +33,7 @@ namespace ContasBancarias
 
         public double rendimento()
         {
-            return 0;
+            return saldo += aliquota;
         }
 
         public bool sacar(double valor)
