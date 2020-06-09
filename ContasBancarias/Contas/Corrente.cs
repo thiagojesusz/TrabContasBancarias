@@ -10,6 +10,7 @@ namespace ContasBancarias
         private static double tarifa = 10.0;
         private double saldo;
         private double limite;
+
         
         public Corrente(double saldo, double limite)
         {

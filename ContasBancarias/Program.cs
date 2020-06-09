@@ -14,7 +14,6 @@ namespace ContasBancarias
             cliente1.addConta(cont1);
             cont.saque(20);
             cont.deposito(10);
-            Console.WriteLine(cont1.extrato());
             Console.WriteLine(cliente1.extrato(0001));
         }
     }
