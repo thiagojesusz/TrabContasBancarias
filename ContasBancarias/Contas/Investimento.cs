@@ -6,16 +6,10 @@ namespace ContasBancarias
 {
     class Investimento: ISacavel
     {
-        private static double aliquota;
-        private static double tarifa = 10.0;
+        private static double aliquota = 1;
+        private static double tarifa = 3;
         private double saldo;
-        private double limite;
-
-        public Investimento(double saldo, double limite)
-        {
-            this.saldo = saldo;
-            this.limite = limite;
-        }
+        private static double limite = 100;
 
         public double cobrarTarifa()
         {
@@ -33,7 +27,6 @@ namespace ContasBancarias
 
         public double rendimento()
         {
-
             return saldo += aliquota;
         }
 

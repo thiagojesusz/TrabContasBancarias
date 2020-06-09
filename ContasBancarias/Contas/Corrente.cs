@@ -7,16 +7,9 @@ namespace ContasBancarias
     class Corrente :ISacavel
     {
         private static double aliquota=1;
-        private static double tarifa = 10.0;
+        private static double tarifa = 3;
         private double saldo;
-        private double limite;
-
-        
-        public Corrente(double saldo, double limite)
-        {
-            this.saldo = saldo;
-            this.limite = limite;
-        }
+        private static double limite = 100;
 
         public double cobrarTarifa()
         {
