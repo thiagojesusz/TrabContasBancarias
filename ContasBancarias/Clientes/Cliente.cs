@@ -14,17 +14,21 @@ namespace ContasBancarias
         {
             this.CPF = CPF;
             this.nome = nome;
-            this.contas = new List<Conta>(10);
+            this.contas = new List<Conta>(100);
         }
         public string getNome() { return nome; }
         public string getCPF() { return CPF; }
 
+        public void addConta(Conta conta)
+        {
+            contas.Add(conta);
+        }
         public string extrato(int numconta)
         {
             string extrato;
+
             extrato =  contas.Find(x => x.getNumConta() == numconta).extrato();
     
-
             return extrato;
         }
 
