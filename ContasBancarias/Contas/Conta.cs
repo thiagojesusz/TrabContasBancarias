@@ -113,7 +113,7 @@ namespace ContasBancarias
                totalTaxas += contCorrente.cobrarTarifa();
             else if (tipo == 1)
                 totalTaxas += contInvestimento.cobrarTarifa();
-            return totalRendimentos;
+            return totalTaxas;
         }
     }
 }
