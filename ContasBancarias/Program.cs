@@ -11,10 +11,15 @@ namespace ContasBancarias
 {
     class Program
     {
+        /// <summary>
+        /// As contas carregadas são de origem de um arquivo.
+        /// </summary>
+        /// <returns>Método carregar as contas que retorna uma lista de contas.</returns>
+        #region Carregar Contas
         static List<Conta> carregarContas()
         {
             List<Conta> contas = new List<Conta>();
-            using (StreamReader arq = new StreamReader(@"C:\Users\caioh\Desktop\TrabContasBancarias\dadosContasPOO.txt")) // dadosContasPOO
+            using (StreamReader arq = new StreamReader(@"C:\dadosContasPOO.txt")) // dadosContasPOO
             {
                 string reader;
 
@@ -29,10 +34,16 @@ namespace ContasBancarias
             }
             return contas;
         }
+        #endregion
 
+        /// <summary>
+        /// Método para carregas as operações dos arquivos.
+        /// </summary>
+        /// <param name="contas"></param>
+        #region Carregar Operações
         static void carregarOperacoes(List<Conta> contas)
         {
-            using (StreamReader arq = new StreamReader(@"C:\Users\caioh\Desktop\TrabContasBancarias\dadosOperacoesBancoPOO.txt")) // dadosContasPOO
+            using (StreamReader arq = new StreamReader(@"C:\dadosOperacoesBancoPOO.txt")) // dadosContasPOO
             {
                 string reader;
                 while (!arq.EndOfStream)
@@ -68,6 +79,13 @@ namespace ContasBancarias
                 }
             }
         }
+        #endregion
+
+        /// <summary>
+        /// Método para retonar a conta com maior saldo.
+        /// </summary>
+        /// <param name="minhasContas"></param>
+        #region Conta com Maior Saldo
         static void contaMaiorSaldo(List<Conta> minhasContas)
         {
             double maior = 0;
@@ -82,11 +100,18 @@ namespace ContasBancarias
             }
             Console.WriteLine("Conta com o maior saldo\n Número: " + maiorConta.getNumConta() + " Titular: " + maiorConta.getCPFTitular() + " Total: R$" + maiorConta.getSaldo().ToString("F2"));
         }
+        #endregion
 
+        /// <summary>
+        /// Método para carregar os clientes dos arquivos.
+        /// </summary>
+        /// <param name="conta"></param>
+        /// <returns></returns>
+        #region Carregar Clientes
         static List<Cliente> carregarClientes(List<Conta> conta)
         {
             List<Cliente> clientes = new List<Cliente>();
-            using (StreamReader arq = new StreamReader(@"C:\Users\caioh\Desktop\TrabContasBancarias\dadosClientesPOO.txt")) // dadosClientesPOO
+            using (StreamReader arq = new StreamReader(@"C:\dadosClientesPOO.txt")) // dadosClientesPOO
             {
                 string reader;
 
@@ -131,132 +156,139 @@ namespace ContasBancarias
             }
             return clientes;
         }
+        #endregion
 
-       static void Menu(List<Conta> minhasContas, List<Cliente> meusClientes)
+        /// <summary>
+        /// Menu de interação com o usuário.
+        /// </summary>
+        /// <param name="minhasContas"></param>
+        /// <param name="meusClientes"></param>
+        #region Menu de Interação
+        static void Menu(List<Conta> minhasContas, List<Cliente> meusClientes)
         {
         inicio:
-                Console.WriteLine("---------NÃO É O BANCO INTER BANKING---------");
-                Console.WriteLine("Selecione uma opção:");
-                Console.WriteLine("1- Mostrar extrato de uma conta.");
-                Console.WriteLine("2- Cobrar taxa do cliente.");
-                Console.WriteLine("3- Mostrar ao cliente o total de taxas pagas.");
-                Console.WriteLine("4- Mostrar a conta com maior saldo do banco.");
+            Console.WriteLine("---------NÃO É O BANCO INTER BANKING---------");
+            Console.WriteLine("Selecione uma opção:");
+            Console.WriteLine("1- Mostrar extrato de uma conta.");
+            Console.WriteLine("2- Cobrar taxa do cliente.");
+            Console.WriteLine("3- Mostrar ao cliente o total de taxas pagas.");
+            Console.WriteLine("4- Mostrar a conta com maior saldo do banco.");
 
-                int selecao = int.Parse(Console.ReadLine());
-               Console.Clear();
-                
-                switch (selecao)
-                {
-                    case 1:
+            int selecao = int.Parse(Console.ReadLine());
+            Console.Clear();
+
+            switch (selecao)
+            {
+                case 1:
+                    {
+                        try
                         {
-                            try
+                            Console.WriteLine("Digite o CPF do Titular: ");
+                            string CPF = Console.ReadLine();
+                            Console.WriteLine("Digite o número da Conta: ");
+                            int num = int.Parse(Console.ReadLine());
+                            Console.Clear();
+                            Cliente quem = meusClientes.Find(x => x.getCPF().Equals(CPF));
+                            Conta qual = minhasContas.Find(x => x.getNumConta().Equals(num));
+                            if (quem.getCPF() == qual.getCPFTitular())
+                                Console.WriteLine(quem.extrato(qual.getNumConta()));
+                            else
                             {
-                                Console.WriteLine("Digite o CPF do Titular: ");
-                                string CPF = Console.ReadLine();
-                                Console.WriteLine("Digite o número da Conta: ");
-                                int num = int.Parse(Console.ReadLine());
-                                Console.Clear();
-                                Cliente quem = meusClientes.Find(x => x.getCPF().Equals(CPF));
-                                Conta qual = minhasContas.Find(x => x.getNumConta().Equals(num));
-                                if (quem.getCPF() == qual.getCPFTitular())
-                                    Console.WriteLine(quem.extrato(qual.getNumConta()));
-                                else
-                                {
-                                    Console.WriteLine("CPF Inválido!");
-                                    goto case 1;
-                                }
-                            }
-                            catch (FormatException)
-                            {
-                                Console.WriteLine("Valor inserido não é um número válido!");
+                                Console.WriteLine("CPF Inválido!");
                                 goto case 1;
                             }
-                            catch (NullReferenceException)
-                            {
-                                Console.WriteLine("Conta ou CPF não encontrado!");
-                                goto case 1;
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine("ERRO!");
-                                goto case 1;
-                            }
-                            break;
                         }
-                    case 2:
+                        catch (FormatException)
                         {
-                            try
-                            {
-                                Console.Write("Digite o número da conta:");
-                                int numConta = int.Parse(Console.ReadLine());
-                                Conta findcont = minhasContas.Find(x => x.getNumConta().Equals(numConta));
-                                Cliente findcliente = meusClientes.Find(x => x.getCPF().Equals(findcont.getCPFTitular()));
-                                Console.Write("Informe o valor da taxa:");
-                                double valorTaxa = double.Parse(Console.ReadLine());
-
-                                double taxa = findcliente.cobrarTaxa(valorTaxa);
-                                findcont.setTotalTaxas(taxa);
-                                findcont.setSaldo(findcont.getSaldo() - taxa);
-                                Console.WriteLine("Taxa cobrada no valor de R$" + valorTaxa.ToString("F2") + " Devido ao desconto do cliente");
-
-                            }
-                            catch (FormatException)
-                            {
-                                Console.WriteLine("Valor inserido não é um número válido!");
-                                goto case 2;
-                            }
-                            catch (NullReferenceException)
-                            {
-                                Console.WriteLine("Conta Inexistente!");
-                                goto case 2;
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine("ERRO!");
-                                goto case 2;
-                            }
-                            break;
+                            Console.WriteLine("Valor inserido não é um número válido!");
+                            goto case 1;
                         }
-                    case 3:
+                        catch (NullReferenceException)
                         {
-                            try
-                            {
-                                Console.Write("Digite o CPF do cliente:");
-                                string CPF = Console.ReadLine();
-
-                                Cliente findcliente = meusClientes.Find(x => x.getCPF().Equals(CPF));
-
-                                findcliente.totalTaxas();
-                            }
-                            catch (FormatException)
-                            {
-                                Console.WriteLine("Valor inserido não é um número válido!");
-                                goto case 3;
-                            }
-                            catch (NullReferenceException)
-                            {
-                                Console.WriteLine("CPF não encontrado!");
-                                goto case 3;
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine("ERRO!");
-                                goto case 3;
-                            }
-                            break;
+                            Console.WriteLine("Conta ou CPF não encontrado!");
+                            goto case 1;
                         }
-                    case 4:
+                        catch (Exception)
                         {
-                            contaMaiorSaldo(minhasContas);
-                            break;
+                            Console.WriteLine("ERRO!");
+                            goto case 1;
                         }
-                    default:
+                        break;
+                    }
+                case 2:
+                    {
+                        try
                         {
-                            Console.WriteLine("Operação inválida");
-                            goto inicio;
+                            Console.Write("Digite o número da conta:");
+                            int numConta = int.Parse(Console.ReadLine());
+                            Conta findcont = minhasContas.Find(x => x.getNumConta().Equals(numConta));
+                            Cliente findcliente = meusClientes.Find(x => x.getCPF().Equals(findcont.getCPFTitular()));
+                            Console.Write("Informe o valor da taxa:");
+                            double valorTaxa = double.Parse(Console.ReadLine());
+
+                            double taxa = findcliente.cobrarTaxa(valorTaxa);
+                            findcont.setTotalTaxas(taxa);
+                            findcont.setSaldo(findcont.getSaldo() - taxa);
+                            Console.WriteLine("Taxa cobrada no valor de R$" + valorTaxa.ToString("F2") + " Devido ao desconto do cliente");
+
                         }
-                }
-            
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Valor inserido não é um número válido!");
+                            goto case 2;
+                        }
+                        catch (NullReferenceException)
+                        {
+                            Console.WriteLine("Conta Inexistente!");
+                            goto case 2;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("ERRO!");
+                            goto case 2;
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        try
+                        {
+                            Console.Write("Digite o CPF do cliente:");
+                            string CPF = Console.ReadLine();
+
+                            Cliente findcliente = meusClientes.Find(x => x.getCPF().Equals(CPF));
+
+                            findcliente.totalTaxas();
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Valor inserido não é um número válido!");
+                            goto case 3;
+                        }
+                        catch (NullReferenceException)
+                        {
+                            Console.WriteLine("CPF não encontrado!");
+                            goto case 3;
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("ERRO!");
+                            goto case 3;
+                        }
+                        break;
+                    }
+                case 4:
+                    {
+                        contaMaiorSaldo(minhasContas);
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Operação inválida");
+                        goto inicio;
+                    }
+            }
+
         inicio1:
             try
             {
@@ -291,6 +323,8 @@ namespace ContasBancarias
                 goto inicio1;
             }
         }
+        #endregion
+
         static void Main(string[] args)
         {
             List<Conta> minhasContas = carregarContas();
