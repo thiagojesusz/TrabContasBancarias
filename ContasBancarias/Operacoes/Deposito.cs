@@ -6,10 +6,21 @@ namespace ContasBancarias
 {
     class Deposito: Operacao
     {
-        public override string atualizar(double valor)
+        public Deposito(double valor) : base(valor)
         {
-            Data = DateTime.Now;
+            this.valor = valor;
+        }
+        public override bool atualizar(Conta conta)
+        {
+            double saldoatual;
+            saldoatual = conta.getSaldo() + valor;
+            conta.setSaldo(saldoatual);
 
+            return true;
+        }
+
+        public override string ToString()
+        {
             return (Data + " - Depósito no valor de R$" + valor.ToString("F2")).ToString();
         }
     }

@@ -6,8 +6,13 @@ namespace ContasBancarias
 {
     abstract class Operacao
     {
+        protected double valor;
         protected DateTime Data;
 
-        public abstract string atualizar(double valor);
+        public Operacao(double valor) {
+            this.valor = valor;
+            this.Data = DateTime.Now;
+        }
+        public abstract bool atualizar(Conta conta);
     }
 }

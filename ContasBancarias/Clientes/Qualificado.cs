@@ -10,7 +10,7 @@ namespace ContasBancarias
         {
             this.CPF = CPF;
             this.nome = nome;
-
+            this.contas = new List<Conta>();
         }
         public override double cobrarTaxa(double valorOriginal)
         {

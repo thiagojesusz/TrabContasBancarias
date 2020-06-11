@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace ContasBancarias
@@ -9,8 +10,12 @@ namespace ContasBancarias
         private static double aliquota=2;
         private static double tarifa = 3;
         private double saldo;
-        private static double limite = 100;
+        private static double limite = 10;
         // ps: mudar método rendimento.
+        public Corrente(double saldo)
+        {
+            this.saldo = saldo;
+        }
         public double cobrarTarifa()
         {
             saldo -= tarifa;
@@ -37,21 +42,24 @@ namespace ContasBancarias
 
         public bool sacar(double valor)
         {
+            
             if (saldo - valor < 0)
                 cobrarTarifa();
             if ((saldo - valor) >= (limite * (-1)))
             {
-                this.saldo -= valor;
                 return true;
             }
             else
                 return false;
 
         }
-
         public double saldoAtual()
         {
             return saldo;
+        }
+        public override string ToString()
+        {
+            return "Conta Corrente";
         }
     }
 }

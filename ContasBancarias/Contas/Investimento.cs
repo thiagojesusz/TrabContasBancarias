@@ -10,6 +10,11 @@ namespace ContasBancarias
         private static double tarifa = 4;
         private double saldo;
         // ps: mudar método rendimento.
+
+        public Investimento(double saldo)
+        {
+            this.saldo = saldo;
+        }
         public double cobrarTarifa()
         {
             saldo -= tarifa;
@@ -49,6 +54,10 @@ namespace ContasBancarias
         public double saldoAtual()
         {
             return saldo;
+        }
+        public override string ToString()
+        {
+            return "Conta Investimento";
         }
     }
 }

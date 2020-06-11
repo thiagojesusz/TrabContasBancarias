@@ -14,7 +14,7 @@ namespace ContasBancarias
         {
             this.CPF = CPF;
             this.nome = nome;
-            this.contas = new List<Conta>(100);
+            this.contas = new List<Conta>();
         }
         public string getNome() { return nome; }
         public string getCPF() { return CPF; }
