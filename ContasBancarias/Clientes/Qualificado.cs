@@ -32,10 +32,14 @@ namespace ContasBancarias
         /// </summary>
         /// <param name="valorOriginal"></param>
         /// <returns></returns>
-        #region Cobrar Taxa
+        #region regras de negócio
         public override double cobrarTaxa(double valorOriginal)
         {
             return valorOriginal - desconto;
+        }
+        public override string ToString()
+        {
+            return "Nome: " + this.nome + " CPF: " + this.CPF + " Cliente Qualificado / Desconto de R$"+desconto.ToString("F2") + " por taxa";
         }
         #endregion
 

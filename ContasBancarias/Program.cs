@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
+using System.Diagnostics;
 
 namespace ContasBancarias
 {
@@ -19,7 +20,7 @@ namespace ContasBancarias
         static List<Conta> carregarContas()
         {
             List<Conta> contas = new List<Conta>();
-            using (StreamReader arq = new StreamReader(@"C:\dadosContasPOO.txt")) // dadosContasPOO
+            using (StreamReader arq = new StreamReader(@"C:\Users\thiag\Desktop\Final\TrabContasBancarias\dadosContasPOO.txt")) // dadosContasPOO
             {
                 string reader;
 
@@ -43,7 +44,7 @@ namespace ContasBancarias
         #region Carregar Operações
         static void carregarOperacoes(List<Conta> contas)
         {
-            using (StreamReader arq = new StreamReader(@"C:\dadosOperacoesBancoPOO.txt")) // dadosContasPOO
+            using (StreamReader arq = new StreamReader(@"C:\Users\thiag\Desktop\Final\TrabContasBancarias\dadosOperacoesBancoPOO.txt")) // dadosContasPOO
             {
                 string reader;
                 while (!arq.EndOfStream)
@@ -111,7 +112,7 @@ namespace ContasBancarias
         static List<Cliente> carregarClientes(List<Conta> conta)
         {
             List<Cliente> clientes = new List<Cliente>();
-            using (StreamReader arq = new StreamReader(@"C:\dadosClientesPOO.txt")) // dadosClientesPOO
+            using (StreamReader arq = new StreamReader(@"C:\Users\thiag\Desktop\Final\TrabContasBancarias\dadosClientesPOO.txt")) // dadosClientesPOO
             {
                 string reader;
 
@@ -229,7 +230,8 @@ namespace ContasBancarias
                             double taxa = findcliente.cobrarTaxa(valorTaxa);
                             findcont.setTotalTaxas(taxa);
                             findcont.setSaldo(findcont.getSaldo() - taxa);
-                            Console.WriteLine("Taxa cobrada no valor de R$" + valorTaxa.ToString("F2") + " Devido ao desconto do cliente");
+                            Console.WriteLine("------CLIENTE-----\n"+findcliente.ToString());
+                            Console.WriteLine("Taxa cobrada no valor de R$" + taxa.ToString("F2") + " Devido ao desconto do cliente");
 
                         }
                         catch (FormatException)
@@ -257,8 +259,8 @@ namespace ContasBancarias
                             string CPF = Console.ReadLine();
 
                             Cliente findcliente = meusClientes.Find(x => x.getCPF().Equals(CPF));
-
-                            findcliente.totalTaxas();
+                            Console.WriteLine(findcliente.ToString());
+                           Console.WriteLine("Total Pago em Taxas: R$"+findcliente.totalTaxas().ToString("F2"));
                         }
                         catch (FormatException)
                         {
