@@ -38,6 +38,7 @@ namespace ContasBancarias
         public double getTotalRendimentos() { return totalRendimentos; }
         public double getTotalTaxas() { return totalTaxas; }
         public void setSaldo(double saldo) { this.saldo = saldo; }
+        public void setTotalTaxas(double taxa) { this.totalTaxas += taxa; }
         public string extrato()
         {
             StringBuilder aux = new StringBuilder("-------------- EXTRATO --------------\n");
@@ -96,7 +97,7 @@ namespace ContasBancarias
             this.saldo -= valor;
             totalTaxas += valor;
 
-            return totalTaxas;
+            return valor;
         }
     }
 }

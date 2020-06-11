@@ -41,7 +41,15 @@ namespace ContasBancarias
             return extrato;
         }
 
-        //public abstract double totalTaxas();
+        public double totalTaxas()
+        {
+            double totalTaxas = 0;
+            foreach(Conta cont in contas)
+            {
+                totalTaxas += cont.getTotalTaxas();
+            }
+            return totalTaxas;
+        }
         //public abstract double totalrendimentos();
         public abstract double cobrarTaxa(double valorOriginal);
     }
