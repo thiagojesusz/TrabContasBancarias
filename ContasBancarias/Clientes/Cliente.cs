@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace ContasBancarias
@@ -18,7 +19,15 @@ namespace ContasBancarias
         }
         public string getNome() { return nome; }
         public string getCPF() { return CPF; }
-
+        public string GetContas()
+        {
+            StringBuilder aux = new StringBuilder();
+            foreach(Conta c in contas)
+            {
+                aux.AppendLine(c.getNumConta().ToString());
+            }
+            return aux.ToString();
+        }
         public void addConta(Conta conta)
         {
             contas.Add(conta);

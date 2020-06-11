@@ -13,13 +13,12 @@ namespace ContasBancarias
         public override bool atualizar(Conta conta)
         {
             double saldoatual;
-            saldoatual = (conta.getSaldo()) - valor;
-            Console.WriteLine(conta.getSaldo());
+            saldoatual = (conta.getSaldo() - valor);
+            Console.WriteLine(saldoatual);
             conta.setSaldo(saldoatual);
 
             return true;
         }
-
         public override string ToString()
         {
             return (Data + " - Saque no valor de R$" + valor.ToString("F2")).ToString();

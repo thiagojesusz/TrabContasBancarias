@@ -10,7 +10,7 @@ namespace ContasBancarias
         private static double aliquota=2;
         private static double tarifa = 3;
         private double saldo;
-        private static double limite = 10;
+        private static double limite = 100;
         // ps: mudar método rendimento.
         public Corrente(double saldo)
         {
@@ -18,8 +18,6 @@ namespace ContasBancarias
         }
         public double cobrarTarifa()
         {
-            saldo -= tarifa;
-
             return tarifa;
         }
 
@@ -42,11 +40,9 @@ namespace ContasBancarias
 
         public bool sacar(double valor)
         {
-            
-            if (saldo - valor < 0)
-                cobrarTarifa();
             if ((saldo - valor) >= (limite * (-1)))
             {
+
                 return true;
             }
             else
