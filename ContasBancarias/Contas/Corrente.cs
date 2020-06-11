@@ -18,6 +18,7 @@ namespace ContasBancarias
         }
         public double cobrarTarifa()
         {
+            saldo -= tarifa;
             return tarifa;
         }
 
@@ -40,14 +41,21 @@ namespace ContasBancarias
 
         public bool sacar(double valor)
         {
+            bool ver = false;
             if ((saldo - valor) >= (limite * (-1)))
             {
 
-                return true;
+                ver = true;
             }
             else
-                return false;
+                ver = false;
 
+            if (saldo - valor < 0)
+            {
+                cobrarTarifa();
+
+            }
+            return ver;
         }
         public double saldoAtual()
         {

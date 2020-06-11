@@ -1,6 +1,4 @@
 ﻿using System;
-
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,13 +57,12 @@ namespace ContasBancarias
                                     break;
 
                                 case "2":
-                                    //conta.rendimento(double.Parse(pos_arq[2]));
+                                    conta.rendimento();
                                     break;
 
                                 default:
                                     break;
                             }
-                            conta.saque(int.Parse(pos_arq[2]));
                         }
                     }
                 }
@@ -124,8 +121,15 @@ namespace ContasBancarias
         static void Main(string[] args)
         {
             List<Conta> minhasContas = carregarContas();
-            List<Cliente> meusClientes = carregarClientes(minhasContas);       
             carregarOperacoes(minhasContas);
+            List<Cliente> meusClientes = carregarClientes(minhasContas);
+
+            Cliente quem = meusClientes.Find(x => x.getCPF().Equals("100298654-00"));
+            Conta qual = minhasContas.Find(x => x.getCPFTitular().Equals("100298654-00"));
+
+            Console.WriteLine(quem.extrato(qual.getNumConta()));
+
+            Console.WriteLine(qual.getTotalRendimentos() + " Taxas " + qual.getTotalTaxas());
         }
     }
 }

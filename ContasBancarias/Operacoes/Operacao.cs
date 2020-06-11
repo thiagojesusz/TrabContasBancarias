@@ -13,6 +13,10 @@ namespace ContasBancarias
             this.valor = valor;
             this.Data = DateTime.Now;
         }
+        public Operacao()
+        {
+            this.Data = DateTime.Now;
+        }
         public abstract bool atualizar(Conta conta);
     }
 }

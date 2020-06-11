@@ -35,11 +35,14 @@ namespace ContasBancarias
         public int getNumConta() { return numConta; }
         public DateTime getDataAbertura() { return dataAbertura; }
         public double getSaldo() { return saldo;}
+        public double getTotalRendimentos() { return totalRendimentos; }
+        public double getTotalTaxas() { return totalTaxas; }
         public void setSaldo(double saldo) { this.saldo = saldo; }
         public string extrato()
         {
             StringBuilder aux = new StringBuilder("-------------- EXTRATO --------------\n");
-                aux.AppendLine("\n"+categoria.ToString()+" Titular: " + CPFTitular + " Conta: " + numConta.ToString("D4"));         
+                aux.AppendLine("\n"+categoria.ToString()+" Titular: " + CPFTitular + " Conta: " + numConta.ToString("D4"));
+            aux.AppendLine("\n Saldo Inicial: " + saldoInical);
             foreach (string ext in listaExtrato)
             {
                 aux.AppendLine(ext);
@@ -54,7 +57,6 @@ namespace ContasBancarias
             bool verificar=true;
             operacao = new Saque(valor);
             verificar = categoria.sacar(valor);
-
             if (verificar == true)
             {
                 operacao.atualizar(this);
@@ -74,6 +76,27 @@ namespace ContasBancarias
                 listaExtrato.Add(operacao.ToString());
             }
             return verificar;
+        }
+        public double rendimento()
+        {
+
+            double valor;
+            valor = categoria.rendimento();
+            this.saldo += valor;
+
+            totalRendimentos += valor;
+            listaExtrato.Add((DateTime.Now +" - Rendimento no valor de R$" + valor.ToString("F2")).ToString());
+
+            return totalRendimentos;
+        }
+        public double tarifa()
+        {
+            double valor;
+            valor = categoria.cobrarTarifa();
+            this.saldo -= valor;
+            totalTaxas += valor;
+
+            return totalTaxas;
         }
     }
 }

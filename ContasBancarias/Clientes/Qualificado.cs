@@ -6,6 +6,7 @@ namespace ContasBancarias
 {
     class Qualificado: Cliente
     {
+        private static double desconto = 3;
         public Qualificado(string CPF, string nome) : base(CPF, nome)
         {
             this.CPF = CPF;
@@ -14,7 +15,7 @@ namespace ContasBancarias
         }
         public override double cobrarTaxa(double valorOriginal)
         {
-            return 2;
+            return valorOriginal - desconto;
         }
     }
 }

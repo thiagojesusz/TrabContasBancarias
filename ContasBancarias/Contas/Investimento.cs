@@ -7,7 +7,7 @@ namespace ContasBancarias
     class Investimento : ISacavel
     {
         private static double aliquota = 10;
-        private static double tarifa = 4;
+        private static double tarifa = 3;
         private double saldo;
         // ps: mudar método rendimento.
 
@@ -18,7 +18,6 @@ namespace ContasBancarias
         public double cobrarTarifa()
         {
             saldo -= tarifa;
-
             return tarifa;
         }
 
@@ -36,7 +35,7 @@ namespace ContasBancarias
         public double rendimento()
         {
             double rendim = aliquota - tarifa;
-            saldo += aliquota;
+            saldo += rendim;
 
             return rendim;
         }

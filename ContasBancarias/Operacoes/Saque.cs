@@ -9,12 +9,12 @@ namespace ContasBancarias
         public Saque(double valor) : base(valor)
         {
             this.valor = valor;
+            this.Data = DateTime.Now;
         }
         public override bool atualizar(Conta conta)
         {
             double saldoatual;
             saldoatual = (conta.getSaldo() - valor);
-            Console.WriteLine(saldoatual);
             conta.setSaldo(saldoatual);
 
             return true;

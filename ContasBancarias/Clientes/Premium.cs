@@ -7,6 +7,7 @@ namespace ContasBancarias
 {
     class Premium: Cliente
     {
+        private static double desconto = 5;
         public Premium(string CPF, string nome) :base(CPF,nome)
         {
             this.CPF = CPF;
@@ -15,7 +16,7 @@ namespace ContasBancarias
         }
         public override double cobrarTaxa(double valorOrignal)
         {
-            return 2;
+            return valorOrignal - desconto;
         }
     }
 }

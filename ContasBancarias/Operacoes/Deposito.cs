@@ -9,6 +9,7 @@ namespace ContasBancarias
         public Deposito(double valor) : base(valor)
         {
             this.valor = valor;
+            this.Data = DateTime.Now;
         }
         public override bool atualizar(Conta conta)
         {
