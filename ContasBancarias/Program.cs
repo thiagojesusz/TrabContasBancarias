@@ -13,6 +13,11 @@ namespace ContasBancarias
 {
     class Program
     {
+        /*Desenvolvedores:
+         * Caio Henrique da Silva Bento
+         * Eduardo André Rodrigues Filho
+         * Thiago Silva de Jesus
+         * */
         /// <summary>
         /// As contas carregadas são de origem de um arquivo.
         /// </summary>
@@ -179,17 +184,26 @@ namespace ContasBancarias
         #region Menu de Interação
         static void Menu(List<Conta> minhasContas, List<Cliente> meusClientes)
         {
-        inicio:
-            Console.WriteLine("---------NÃO É O BANCO INTER BANKING---------");
-            Console.WriteLine("Selecione uma opção:");
-            Console.WriteLine("1- Mostrar extrato de uma conta.");
-            Console.WriteLine("2- Cobrar taxa do cliente.");
-            Console.WriteLine("3- Mostrar ao cliente o total de taxas pagas.");
-            Console.WriteLine("4- Mostrar a conta com maior saldo do banco.");
+            int selecao=0;
+            inicio:
+            try
+            {
+                Console.WriteLine("---------NÃO É O BANCO INTER BANKING---------");
+                Console.WriteLine("Selecione uma opção:");
+                Console.WriteLine("1- Mostrar extrato de uma conta.");
+                Console.WriteLine("2- Cobrar taxa do cliente.");
+                Console.WriteLine("3- Mostrar ao cliente o total de taxas pagas.");
+                Console.WriteLine("4- Mostrar a conta com maior saldo do banco.");
 
-            int selecao = int.Parse(Console.ReadLine());
-            Console.Clear();
-
+                selecao = int.Parse(Console.ReadLine());
+                Console.Clear();
+            }
+            catch (FormatException)
+            {
+                Console.Clear();
+                Console.WriteLine("Insira um valor válido!");
+                goto inicio;
+            }
             switch (selecao)
             {
                 case 1:
