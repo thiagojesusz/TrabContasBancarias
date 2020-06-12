@@ -67,9 +67,9 @@ namespace ContasBancarias
         #region Extrato
         public string extrato()
         {
-            StringBuilder aux = new StringBuilder("-------------- EXTRATO --------------\n");
-            aux.AppendLine("\n" + categoria.ToString() + " Titular: " + CPFTitular + " Conta: " + numConta.ToString("D4"));
-            aux.AppendLine("\n Saldo Inicial: " + saldoInical);
+            StringBuilder aux = new StringBuilder();
+            aux.AppendLine("\n" + categoria.ToString() + " Conta: " + numConta.ToString("D4"));
+            aux.AppendLine("\n Saldo Inicial: R$" + saldoInical.ToString("F2"));
             foreach (string ext in listaExtrato)
             {
                 aux.AppendLine(ext);
@@ -85,11 +85,11 @@ namespace ContasBancarias
         /// </summary>
         /// <param name="valor"></param>
         /// <returns></returns>
-        #region Saque
-        public bool saque(double valor)
+        #region Sacar
+        public bool saque(double valor, DateTime data)
         {
-            bool verificar = true;
-            operacao = new Saque(valor);
+            bool verificar;
+            operacao = new Saque(valor, data);
             verificar = categoria.sacar(valor);
             if (verificar == true)
             {
@@ -106,10 +106,10 @@ namespace ContasBancarias
         /// <param name="valor"></param>
         /// <returns></returns>
         #region Deposito
-        public bool deposito(double valor)
+        public bool deposito(double valor, DateTime data)
         {
             bool verificar = true;
-            operacao = new Deposito(valor);
+            operacao = new Deposito(valor,data);
             verificar = categoria.depositar(valor);
             if (verificar == true)
             {
@@ -125,7 +125,7 @@ namespace ContasBancarias
         /// </summary>
         /// <returns></returns>
         #region Rendimento
-        public double rendimento()
+        public double rendimento(DateTime data)
         {
 
             double valor;
@@ -133,7 +133,7 @@ namespace ContasBancarias
             this.saldo += valor;
 
             totalRendimentos += valor;
-            listaExtrato.Add((DateTime.Now + " - Rendimento no valor de R$" + valor.ToString("F2")).ToString());
+            listaExtrato.Add((data + " - Rendimento no valor de R$" + valor.ToString("F2")).ToString());
 
             return totalRendimentos;
         }

@@ -11,10 +11,10 @@ namespace ContasBancarias
         /// </summary>
         /// <param name="valor"></param>
         #region Construtor da classe
-        public Deposito(double valor) : base(valor)
+        public Deposito(double valor, DateTime data) : base(valor,data)
         {
             this.valor = valor;
-            this.Data = DateTime.Now;
+            this.Data = data;
         }
         #endregion
 

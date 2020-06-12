@@ -11,10 +11,10 @@ namespace ContasBancarias
         /// </summary>
         /// <param name="valor"></param>
         #region Construtor
-        public Saque(double valor) : base(valor)
+        public Saque(double valor, DateTime date) : base(valor,date)
         {
             this.valor = valor;
-            this.Data = DateTime.Now;
+            this.Data = date;
         }
         #endregion
 

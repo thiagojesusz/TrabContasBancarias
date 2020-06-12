@@ -12,7 +12,7 @@
 100269121-00;Mauro I Baeta;0
 100298654-00;Nicky W Alves;1
 100317320-00;Nicky Y Ricoy;0
-100324000-00;Nicky V Rodrigues;1
+100324000-00;Nicky V Rodrigues1
 100351534-00;Guilherme D Fernandes;0
 100389231-00;Guilherme Y Miranda;1
 100415004-00;Ener X Leite;0

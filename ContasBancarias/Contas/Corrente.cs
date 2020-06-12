@@ -14,7 +14,7 @@ namespace ContasBancarias
         private static double aliquota = 2;
         private static double tarifa = 3;
         private double saldo;
-        private static double limite = 100;
+        private static double limite = 1000;
         #endregion
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace ContasBancarias
         #region ToString
         public override string ToString()
         {
-            return "Conta Corrente";
+            return "Categoria: Corrente";
         }
         #endregion
 

@@ -106,7 +106,7 @@ namespace ContasBancarias
         #region ToString
         public override string ToString()
         {
-            return "Conta Investimento";
+            return "Categoria: Investimento";
         }
         #endregion
 

@@ -7,6 +7,7 @@ using System.IO;
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 
 namespace ContasBancarias
 {
@@ -26,12 +27,16 @@ namespace ContasBancarias
 
                 while (!arq.EndOfStream)
                 {
-                    reader = arq.ReadLine();
-                    string[] pos_arq = reader.Split(';');
+                    try {
+                        reader = arq.ReadLine();
+                        string[] pos_arq = reader.Split(';');
 
-                    Conta c = new Conta(int.Parse(pos_arq[0]), int.Parse(pos_arq[1]), pos_arq[2], double.Parse(pos_arq[3]));
-                    contas.Add(c);
-                }
+                        Conta c = new Conta(int.Parse(pos_arq[0]), int.Parse(pos_arq[1]), pos_arq[2], double.Parse(pos_arq[3]));
+                        contas.Add(c);
+                    }
+                    catch (IndexOutOfRangeException) {}
+                    catch (Exception) { }
+                    }
             }
             return contas;
         }
@@ -49,34 +54,38 @@ namespace ContasBancarias
                 string reader;
                 while (!arq.EndOfStream)
                 {
-                    reader = arq.ReadLine();
-                    string[] pos_arq = reader.Split(';');
-                    int numConta = int.Parse(pos_arq[0]);
-
-                    foreach (Conta conta in contas)
+                    try
                     {
+                        reader = arq.ReadLine();
+                        string[] pos_arq = reader.Split(';');
+                        int numConta = int.Parse(pos_arq[0]);
 
-                        if (conta.getNumConta() == numConta)
+                        foreach (Conta conta in contas)
                         {
-                            switch (pos_arq[1])
+
+                            if (conta.getNumConta() == numConta)
                             {
-                                case "0":
-                                    conta.saque(double.Parse(pos_arq[2]));
-                                    break;
+                                switch (pos_arq[1])
+                                {
+                                    case "0":
+                                        conta.saque(double.Parse(pos_arq[2]), DateTime.Parse(pos_arq[3]));
+                                        break;
 
-                                case "1":
-                                    conta.deposito(double.Parse(pos_arq[2]));
-                                    break;
+                                    case "1":
+                                        conta.deposito(double.Parse(pos_arq[2]), DateTime.Parse(pos_arq[3]));
+                                        break;
 
-                                case "2":
-                                    conta.rendimento();
-                                    break;
+                                    case "2":
+                                        conta.rendimento(DateTime.Parse(pos_arq[3]));
+                                        break;
 
-                                default:
-                                    break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
-                    }
+                    }catch (IndexOutOfRangeException) { }
+                    catch (Exception) { }
                 }
             }
         }
@@ -118,42 +127,45 @@ namespace ContasBancarias
 
                 while (!arq.EndOfStream)
                 {
-                    reader = arq.ReadLine();
-                    string[] pos_arq = reader.Split(';');
+                    try {
+                        reader = arq.ReadLine();
+                        string[] pos_arq = reader.Split(';');
 
-                    switch (pos_arq[2])
-                    {
-                        case "0":
-                            Regular r = new Regular(pos_arq[0], pos_arq[1]);
-                            clientes.Add(r);
-                            foreach (Conta cont in conta)
-                            {
-                                if (cont.getCPFTitular().Equals(r.getCPF()))
-                                    r.addConta(cont);
-                            }
-                            break;
-                        case "1":
-                            Qualificado q = new Qualificado(pos_arq[0], pos_arq[1]);
-                            clientes.Add(q);
-                            foreach (Conta cont in conta)
-                            {
-                                if (cont.getCPFTitular().Equals(q.getCPF()))
-                                    q.addConta(cont);
-                            }
-                            break;
-                        case "2":
-                            Premium p = new Premium(pos_arq[0], pos_arq[1]);
-                            clientes.Add(p);
-                            foreach (Conta cont in conta)
-                            {
-                                if (cont.getCPFTitular().Equals(p.getCPF()))
-                                    p.addConta(cont);
-                            }
-                            break;
-                        default: throw new ArgumentException("Tipo de cliente desconhecido");
+                        switch (pos_arq[2])
+                        {
+                            case "0":
+                                Regular r = new Regular(pos_arq[0], pos_arq[1]);
+                                clientes.Add(r);
+                                foreach (Conta cont in conta)
+                                {
+                                    if (cont.getCPFTitular().Equals(r.getCPF()))
+                                        r.addConta(cont);
+                                }
+                                break;
+                            case "1":
+                                Qualificado q = new Qualificado(pos_arq[0], pos_arq[1]);
+                                clientes.Add(q);
+                                foreach (Conta cont in conta)
+                                {
+                                    if (cont.getCPFTitular().Equals(q.getCPF()))
+                                        q.addConta(cont);
+                                }
+                                break;
+                            case "2":
+                                Premium p = new Premium(pos_arq[0], pos_arq[1]);
+                                clientes.Add(p);
+                                foreach (Conta cont in conta)
+                                {
+                                    if (cont.getCPFTitular().Equals(p.getCPF()))
+                                        p.addConta(cont);
+                                }
+                                break;
+                            default: throw new ArgumentException("Tipo de cliente desconhecido");
+                        }
+
+                    }catch (IndexOutOfRangeException) { }
+                    catch (Exception) { }
                     }
-
-                }
             }
             return clientes;
         }
@@ -192,7 +204,10 @@ namespace ContasBancarias
                             Cliente quem = meusClientes.Find(x => x.getCPF().Equals(CPF));
                             Conta qual = minhasContas.Find(x => x.getNumConta().Equals(num));
                             if (quem.getCPF() == qual.getCPFTitular())
+                            {
+                                Console.WriteLine("TITULAR - "+quem.ToString());
                                 Console.WriteLine(quem.extrato(qual.getNumConta()));
+                            }
                             else
                             {
                                 Console.WriteLine("CPF Inválido!");

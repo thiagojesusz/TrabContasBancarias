@@ -40,7 +40,7 @@ namespace ContasBancarias
         }
         public override string ToString()
         {
-            return "Nome: " + this.nome + " CPF: " + this.CPF + " Cliente Premium / Desconto de R$" + desconto.ToString("F2")+" por taxa";
+            return "Nome: " + this.nome + " CPF: " + this.CPF + " Cliente Premium ";
         }
         #endregion
 

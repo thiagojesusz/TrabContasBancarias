@@ -19,10 +19,10 @@ namespace ContasBancarias
         /// </summary>
         /// <param name="valor"></param>
         #region Construtor 01
-        public Operacao(double valor)
+        public Operacao(double valor, DateTime data)
         {
             this.valor = valor;
-            this.Data = DateTime.Now;
+            this.Data = data;
         }
         #endregion
 
